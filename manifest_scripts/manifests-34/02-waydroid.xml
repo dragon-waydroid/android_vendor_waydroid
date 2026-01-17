@@ -16,7 +16,7 @@
   <!-- Display -->
   <project path="external/hbm-prebuilts" name="android-generic/external_hbm-prebuilts" remote="ghub" revision="refs/heads/11" />
   <project path="external/mesa" name="WayDroid-ATV/android_external_mesa3d" remote="ghub" revision="refs/heads/lineage-18.1" />
-  <project path="external/minigbm" name="WayDroid-ATV/android_external_minigbm" remote="ghub" revision="refs/heads/lineage-20" />
+  <project path="external/minigbm" name="WayDroid-ATV/android_external_minigbm" remote="ghub" revision="refs/heads/lineage-21" />
   <project path="external/libdrm" name="WayDroid-ATV/android_external_libdrm" remote="ghub" revision="refs/heads/lineage-20" />
   <project path="external/llvm-project" name="WayDroid/android_external_llvm-project" remote="ghub" revision="refs/heads/lineage-18.1"/>
 
@@ -36,14 +36,16 @@
 
   <!-- Native Bridge -->
   <project path="vendor/intel/proprietary/houdini" name="WayDroid-ATV/vendor_intel_proprietary_houdini" remote="ghub" revision="refs/heads/hpe-14" />
-  <project path="vendor/google/proprietary/ndk_translation-prebuilt" name="supremegamers/vendor_google_proprietary_ndk_translation-prebuilt" remote="ghub" revision="refs/heads/chromeos_zork" />
 
   <!-- GApps -->
-  <project path="vendor/gapps_tv" name="WayDroid-ATV/mindthegapps_tv" remote="ghub" revision="refs/heads/tau" />
+  <project path="vendor/gapps_tv" name="WayDroid-ATV/mindthegapps_tv" remote="ghub" revision="refs/heads/upsilon_x86_64" />
 
   <!-- Build -->
   <project path="prebuilts/mesa-tools" name="WayDroid/android_prebuilts_mesa-tools" groups="pdk" clone-depth="1" remote="ghub" revision="refs/heads/main" />
 
   <!-- Others -->
   <project path="frameworks/av" name="WayDroid-ATV/android_frameworks_av" clone-depth="1" remote="ghub" revision="refs/heads/lineage-21.0" />
+  <project path="frameworks/base" name="WayDroid-ATV/android_frameworks_base" clone-depth="1" remote="ghub" revision="refs/heads/lineage-21.0" />
+  <project path="frameworks/native" name="WayDroid-ATV/android_frameworks_native" clone-depth="1" remote="ghub" revision="refs/heads/lineage-21.0" />
+  <project path="system/core" name="WayDroid-ATV/android_system_core" clone-depth="1" remote="ghub" revision="refs/heads/lineage-21.0" />
 </manifest>

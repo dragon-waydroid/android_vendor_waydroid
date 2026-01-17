@@ -1,0 +1,38 @@
+From 5e270b73b80d2028a81d4ee9b65af67ee2366a92 Mon Sep 17 00:00:00 2001
+From: SupeChicken666 <me@supechicken666.dev>
+Date: Sun, 18 Jan 2026 16:01:29 +0000
+Subject: [PATCH] apexd: Do not fail on setting read_ahead_kb
+
+Change-Id: I48ceb78e2ba7ca073f2cb3e422afe0ebdf6858e4
+Signed-off-by: SupeChicken666 <me@supechicken666.dev>
+---
+ apexd/apexd_loop.cpp | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/apexd/apexd_loop.cpp b/apexd/apexd_loop.cpp
+index e15a7fa8..0effc72b 100644
+--- a/apexd/apexd_loop.cpp
++++ b/apexd/apexd_loop.cpp
+@@ -255,15 +255,15 @@ Result<void> ConfigureReadAhead(const std::string& device_path) {
+   std::string sysfs_device =
+       StringPrintf("/sys/block/%s/queue/read_ahead_kb", device_name.c_str());
+   unique_fd sysfs_fd(open(sysfs_device.c_str(), O_RDWR | O_CLOEXEC));
+-  if (sysfs_fd.get() == -1) {
++  /*if (sysfs_fd.get() == -1) {
+     return ErrnoError() << "Failed to open " << sysfs_device;
+-  }
++  }*/
+ 
+   int ret = TEMP_FAILURE_RETRY(
+       write(sysfs_fd.get(), kReadAheadKb, strlen(kReadAheadKb) + 1));
+-  if (ret < 0) {
++  /*if (ret < 0) {
+     return ErrnoError() << "Failed to write to " << sysfs_device;
+-  }
++  }*/
+ 
+   return {};
+ }
+-- 
+2.52.0
+

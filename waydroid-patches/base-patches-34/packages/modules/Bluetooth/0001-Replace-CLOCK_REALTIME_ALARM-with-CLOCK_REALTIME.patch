@@ -1,0 +1,156 @@
+From 0ef450772268553283667d246c86121a7dadf783 Mon Sep 17 00:00:00 2001
+From: SupeChicken666 <me@supechicken666.dev>
+Date: Sun, 18 Jan 2026 16:13:28 +0000
+Subject: [PATCH] Replace CLOCK_REALTIME_ALARM with CLOCK_REALTIME
+
+Waydroid should not interrupt the host from sleeping
+
+Change-Id: Ifc4bdecd87439203830ce9bb34a4fd208c014d3e
+---
+ ...K_REALTIME_ALARM-with-CLOCK_REALTIME.patch | 78 +++++++++++++++++++
+ system/gd/os/linux_generic/alarm.cc           |  2 +-
+ system/gd/os/linux_generic/repeating_alarm.cc |  2 +-
+ system/gd/rust/common/src/time.rs             |  2 +-
+ system/osi/src/alarm.cc                       |  2 +-
+ 5 files changed, 82 insertions(+), 4 deletions(-)
+ create mode 100644 0001-Replace-CLOCK_REALTIME_ALARM-with-CLOCK_REALTIME.patch
+
+diff --git a/0001-Replace-CLOCK_REALTIME_ALARM-with-CLOCK_REALTIME.patch b/0001-Replace-CLOCK_REALTIME_ALARM-with-CLOCK_REALTIME.patch
+new file mode 100644
+index 0000000000..f90fb7c03c
+--- /dev/null
++++ b/0001-Replace-CLOCK_REALTIME_ALARM-with-CLOCK_REALTIME.patch
+@@ -0,0 +1,78 @@
++From c68cdd6ff42f4e400317379849671447fbbcf57a Mon Sep 17 00:00:00 2001
++From: SupeChicken666 <me@supechicken666.dev>
++Date: Sun, 18 Jan 2026 16:13:28 +0000
++Subject: [PATCH] Replace CLOCK_REALTIME_ALARM with CLOCK_REALTIME
++
++Waydroid should not interrupt the host from sleeping
++
++Change-Id: Ifc4bdecd87439203830ce9bb34a4fd208c014d3e
++---
++ ...K_REALTIME_ALARM-with-CLOCK_REALTIME.patch | 28 +++++++++++++++++++
++ system/gd/os/linux_generic/alarm.cc           |  2 +-
++ system/gd/os/linux_generic/repeating_alarm.cc |  2 +-
++ 3 files changed, 30 insertions(+), 2 deletions(-)
++ create mode 100644 0001-Replace-CLOCK_REALTIME_ALARM-with-CLOCK_REALTIME.patch
++
++diff --git a/0001-Replace-CLOCK_REALTIME_ALARM-with-CLOCK_REALTIME.patch b/0001-Replace-CLOCK_REALTIME_ALARM-with-CLOCK_REALTIME.patch
++new file mode 100644
++index 0000000000..5ff2f63f22
++--- /dev/null
+++++ b/0001-Replace-CLOCK_REALTIME_ALARM-with-CLOCK_REALTIME.patch
++@@ -0,0 +1,28 @@
+++From 88309a03d8fbd49040c11b3192563d7c2a84e021 Mon Sep 17 00:00:00 2001
+++From: SupeChicken666 <me@supechicken666.dev>
+++Date: Sun, 18 Jan 2026 16:13:28 +0000
+++Subject: [PATCH] Replace CLOCK_REALTIME_ALARM with CLOCK_REALTIME
+++
+++Waydroid should not interrupt the host from sleeping
+++
+++Change-Id: Ifc4bdecd87439203830ce9bb34a4fd208c014d3e
+++---
+++ system/gd/os/linux_generic/repeating_alarm.cc | 2 +-
+++ 1 file changed, 1 insertion(+), 1 deletion(-)
+++
+++diff --git a/system/gd/os/linux_generic/repeating_alarm.cc b/system/gd/os/linux_generic/repeating_alarm.cc
+++index c549fd8aa9..2fbccb5f6a 100644
+++--- a/system/gd/os/linux_generic/repeating_alarm.cc
++++++ b/system/gd/os/linux_generic/repeating_alarm.cc
+++@@ -27,7 +27,7 @@
+++ #include "os/utils.h"
+++
+++ #ifdef __ANDROID__
+++-#define ALARM_CLOCK CLOCK_BOOTTIME_ALARM
++++#define ALARM_CLOCK CLOCK_BOOTTIME
+++ #else
+++ #define ALARM_CLOCK CLOCK_BOOTTIME
+++ #endif
+++--
+++2.52.0
+++
++diff --git a/system/gd/os/linux_generic/alarm.cc b/system/gd/os/linux_generic/alarm.cc
++index 4820018eb1..6226432d8c 100644
++--- a/system/gd/os/linux_generic/alarm.cc
+++++ b/system/gd/os/linux_generic/alarm.cc
++@@ -27,7 +27,7 @@
++ #include "os/utils.h"
++
++ #ifdef __ANDROID__
++-#define ALARM_CLOCK CLOCK_BOOTTIME_ALARM
+++#define ALARM_CLOCK CLOCK_BOOTTIME
++ #else
++ #define ALARM_CLOCK CLOCK_BOOTTIME
++ #endif
++diff --git a/system/gd/os/linux_generic/repeating_alarm.cc b/system/gd/os/linux_generic/repeating_alarm.cc
++index c549fd8aa9..2fbccb5f6a 100644
++--- a/system/gd/os/linux_generic/repeating_alarm.cc
+++++ b/system/gd/os/linux_generic/repeating_alarm.cc
++@@ -27,7 +27,7 @@
++ #include "os/utils.h"
++
++ #ifdef __ANDROID__
++-#define ALARM_CLOCK CLOCK_BOOTTIME_ALARM
+++#define ALARM_CLOCK CLOCK_BOOTTIME
++ #else
++ #define ALARM_CLOCK CLOCK_BOOTTIME
++ #endif
++--
++2.52.0
++
+diff --git a/system/gd/os/linux_generic/alarm.cc b/system/gd/os/linux_generic/alarm.cc
+index 4820018eb1..235b7c77b8 100644
+--- a/system/gd/os/linux_generic/alarm.cc
++++ b/system/gd/os/linux_generic/alarm.cc
+@@ -26,7 +26,7 @@
+ #include "os/log.h"
+ #include "os/utils.h"
+
+-#ifdef __ANDROID__
++#if 0
+ #define ALARM_CLOCK CLOCK_BOOTTIME_ALARM
+ #else
+ #define ALARM_CLOCK CLOCK_BOOTTIME
+diff --git a/system/gd/os/linux_generic/repeating_alarm.cc b/system/gd/os/linux_generic/repeating_alarm.cc
+index c549fd8aa9..295ddf42cc 100644
+--- a/system/gd/os/linux_generic/repeating_alarm.cc
++++ b/system/gd/os/linux_generic/repeating_alarm.cc
+@@ -26,7 +26,7 @@
+ #include "os/log.h"
+ #include "os/utils.h"
+
+-#ifdef __ANDROID__
++#if 0
+ #define ALARM_CLOCK CLOCK_BOOTTIME_ALARM
+ #else
+ #define ALARM_CLOCK CLOCK_BOOTTIME
+diff --git a/system/gd/rust/common/src/time.rs b/system/gd/rust/common/src/time.rs
+index 0fd2226a4a..99d01a0362 100644
+--- a/system/gd/rust/common/src/time.rs
++++ b/system/gd/rust/common/src/time.rs
+@@ -100,7 +100,7 @@ impl Interval {
+ }
+
+ fn get_clock() -> ClockId {
+-    if cfg!(target_os = "android") {
++    if false {
+         ClockId::CLOCK_BOOTTIME_ALARM
+     } else {
+         ClockId::CLOCK_BOOTTIME
+diff --git a/system/osi/src/alarm.cc b/system/osi/src/alarm.cc
+index 408f4f3bee..51f6cc8c9c 100644
+--- a/system/osi/src/alarm.cc
++++ b/system/osi/src/alarm.cc
+@@ -673,7 +673,7 @@ static bool timer_create_internal(const clockid_t clock_id, timer_t* timer) {
+   sigevent.sigev_notify = SIGEV_THREAD;
+   sigevent.sigev_notify_function = (void (*)(union sigval))timer_callback;
+   sigevent.sigev_notify_attributes = &thread_attr;
+-  if (timer_create(clock_id, &sigevent, timer) == -1) {
++  if (timer_create(clock_id == CLOCK_BOOTTIME_ALARM ? CLOCK_BOOTTIME : clock_id, &sigevent, timer) == -1) {
+     LOG_ERROR("%s unable to create timer with clock %d: %s", __func__, clock_id,
+               strerror(errno));
+     if (clock_id == CLOCK_BOOTTIME_ALARM) {
+--
+2.52.0
+
