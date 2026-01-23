@@ -6,6 +6,9 @@ on boot
 on property:sys.boot_completed=1
     start adbd
 
+on early-init
+    exec -- /vendor/bin/waydroid-init
+
 on post-fs-data
     mkdir /data/icons 0775 system system
     mkdir /data/waydroid_tmp 0755 host system

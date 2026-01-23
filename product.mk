@@ -21,7 +21,8 @@ PRODUCT_COPY_FILES += \
 # Init
 PRODUCT_PACKAGES += \
     init.waydroid.rc \
-    waydroid-preinit
+    waydroid-preinit \
+    waydroid-init
 
 # Dummy libnfc-nci.conf
 PRODUCT_PACKAGES += \
