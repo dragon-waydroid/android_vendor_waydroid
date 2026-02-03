@@ -1,0 +1,40 @@
+From 5f54b1e514b5e80ad6eff4939774fdfcdba273d7 Mon Sep 17 00:00:00 2001
+From: Timi <timi.rautamaki@gmail.com>
+Date: Fri, 20 Dec 2024 08:46:19 +0200
+Subject: [PATCH 2/2] Enable Catapult as config_defaultListenerAccessPackages
+
+Change-Id: Iee615e2ecef7c0b601b9da808ac26791f888e9c7
+---
+ .../base/core/res/res/values/config.xml       | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+ create mode 100644 overlay/tv/frameworks/base/core/res/res/values/config.xml
+
+diff --git a/overlay/tv/frameworks/base/core/res/res/values/config.xml b/overlay/tv/frameworks/base/core/res/res/values/config.xml
+new file mode 100644
+index 00000000..1bce3aff
+--- /dev/null
++++ b/overlay/tv/frameworks/base/core/res/res/values/config.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2024 The LineageOS Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Colon separated list of package names that should be granted Notification Listener access -->
++    <string name="config_defaultListenerAccessPackages" translatable="false">org.lineageos.tv.launcher</string>
++</resources>
+-- 
+2.52.0
+

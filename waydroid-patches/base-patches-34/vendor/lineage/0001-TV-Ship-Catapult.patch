@@ -1,0 +1,25 @@
+From d96cd9c9b4e99e501144ae63d17f122d70e9d1e8 Mon Sep 17 00:00:00 2001
+From: Timi <timi.rautamaki@gmail.com>
+Date: Sun, 8 Dec 2024 22:59:47 +0200
+Subject: [PATCH 1/2] TV: Ship Catapult
+
+Change-Id: I7c27de6565d203c8ad3d5a0b4e9e1680f0c8cd70
+---
+ config/common_tv.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/config/common_tv.mk b/config/common_tv.mk
+index c0a7f0f8..a5dcb01e 100644
+--- a/config/common_tv.mk
++++ b/config/common_tv.mk
+@@ -13,6 +13,7 @@ PRODUCT_PACKAGES += \
+
+ # Lineage packages
+ PRODUCT_PACKAGES += \
++    Catapult \
+     LineageCustomizer
+
+ PRODUCT_PACKAGE_OVERLAYS += vendor/lineage/overlay/tv
+--
+2.52.0
+
