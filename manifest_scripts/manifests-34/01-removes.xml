@@ -7,5 +7,7 @@
   <remove-project name="LineageOS/android_frameworks_av" />
   <remove-project name="LineageOS/android_frameworks_base" />
   <remove-project name="LineageOS/android_frameworks_native" />
+  <remove-project name="LineageOS/android_lineage-sdk" />
   <remove-project name="LineageOS/android_system_core" />
+  <remove-project name="LineageOS/android_packages_apps_TvSettings" />
 </manifest>
