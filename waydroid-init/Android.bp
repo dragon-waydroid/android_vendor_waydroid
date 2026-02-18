@@ -2,14 +2,17 @@ cc_binary {
     name: "waydroid-init",
     vendor: true,
     srcs: ["*.c"],
-    header_libs: ["libva_headers"],
-    shared_libs: ["libbase", "libcutils", "liblog", "libva", "libva-android"],
+    shared_libs: ["libbase", "libcutils", "liblog"],
     arch: {
         x86: {
             cflags: ["-DUSE_VAAPI"],
+            header_libs: ["libva_headers"],
+            shared_libs: ["libva", "libva-android"],
         },
         x86_64: {
             cflags: ["-DUSE_VAAPI"],
+            header_libs: ["libva_headers"],
+            shared_libs: ["libva", "libva-android"],
         },
     }
 }
