@@ -1,0 +1,31 @@
+From bac4f68d47b766804c0a38126a7aaa1750fe86a6 Mon Sep 17 00:00:00 2001
+From: SupeChicken666 <me@supechicken666.dev>
+Date: Sat, 24 Jan 2026 08:06:51 +0000
+Subject: [PATCH 8/8] vold: Fix VolumeManager
+
+Change-Id: Ia641fccd95f94a4a05e9b48c522654bd3c79f9c6
+Signed-off-by: SupeChicken666 <me@supechicken666.dev>
+---
+ VolumeManager.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/VolumeManager.cpp b/VolumeManager.cpp
+index 2b42e25..c96a1b0 100644
+--- a/VolumeManager.cpp
++++ b/VolumeManager.cpp
+@@ -1332,10 +1332,12 @@ static android::status_t getDeviceSize(std::string& device, int64_t* storageSize
+         LOG(ERROR) << "data device " << dataDevice << " is not a path";
+         return EINVAL;
+     }
++#if 0
+     if (dataDevice.substr(0, leaf) != "/dev/block") {
+         LOG(ERROR) << "data device " << dataDevice << " is not a block device";
+         return EINVAL;
+     }
++#endif
+     std::string sysfs = std::string() + "/sys/block/" + dataDevice.substr(leaf + 1);
+ 
+     // Look for a directory in /sys/block containing size where the name is a shortened
+-- 
+2.53.0
+

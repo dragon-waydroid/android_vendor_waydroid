@@ -1,0 +1,26 @@
+From 83ed57199ba3315f008a65aca64c99cb714cf5b9 Mon Sep 17 00:00:00 2001
+From: SupeChicken666 <me@supechicken666.dev>
+Date: Wed, 11 Mar 2026 17:26:36 +0000
+Subject: [PATCH] Fix building on A16 QPR2
+
+Signed-off-by: SupeChicken666 <me@supechicken666.dev>
+---
+ Android.bp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Android.bp b/Android.bp
+index 3f95740..0cad84f 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -133,7 +133,7 @@ cc_defaults {
+         "libnativewindow",
+         "libsync",
+         "liblog",
+-        "android.hardware.graphics.common-V5-ndk",
++        "android.hardware.graphics.common-V7-ndk",
+     ],
+ }
+
+--
+2.53.0
+

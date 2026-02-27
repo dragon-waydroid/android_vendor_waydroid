@@ -1,0 +1,27 @@
+From cfdd29ba8f54f9416e1c2f25c6b8a5ecd6ce69c5 Mon Sep 17 00:00:00 2001
+From: SupeChicken666 <me@supechicken666.dev>
+Date: Sat, 28 Feb 2026 19:00:05 +0000
+Subject: [PATCH] Rename vulkan.lvp to avoid name conflicts with upstream Mesa
+
+Change-Id: I360ad1f5e5e0572a34167ffb41b33027999fbb72
+Signed-off-by: SupeChicken666 <me@supechicken666.dev>
+---
+ src/gallium/targets/lavapipe/Android.bp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/gallium/targets/lavapipe/Android.bp b/src/gallium/targets/lavapipe/Android.bp
+index 14a542d..9fcde49 100644
+--- a/src/gallium/targets/lavapipe/Android.bp
++++ b/src/gallium/targets/lavapipe/Android.bp
+@@ -20,7 +20,7 @@ package {
+ }
+ 
+ cc_library_shared {
+-    name: "vulkan.lvp",
++    name: "vulkan.lvp.aosp",
+     host_supported: true,
+     defaults: [
+         "mesa_common_defaults",
+-- 
+2.53.0
+
