@@ -321,7 +321,8 @@ int get_intel_gpu_generation(const char *render_node) {
 }
 
 int main(int argc, char **argv) {
-    const bool override_gralloc = property_get_bool("ro.gralloc.override", true);
+    const bool override_gralloc   = property_get_bool("ro.gralloc.override", true),
+               use_minigbm_amdgpu = property_get_bool("ro.gralloc.minigbm_amdgpu", false);
 
     char gralloc_cmdline[100],
          gralloc_impl[PROPERTY_VALUE_MAX],
@@ -363,7 +364,7 @@ int main(int argc, char **argv) {
     }
 
     if (override_gralloc) {
-        if (strncmp(gpu_driver_name, "amdgpu", 6) == 0 ||
+        if ((strncmp(gpu_driver_name, "amdgpu", 6) == 0 && use_minigbm_amdgpu) ||
             strncmp(gpu_driver_name, "virtio", 6) == 0 ||
             strncmp(gpu_driver_name, "vmwgfx", 6) == 0) {
 
