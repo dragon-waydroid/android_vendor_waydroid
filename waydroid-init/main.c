@@ -9,6 +9,7 @@
 #include <string.h>
 #include <errno.h>
 #include <libgen.h>
+#include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/sysmacros.h>
 #include <linux/limits.h>
@@ -321,8 +322,9 @@ int get_intel_gpu_generation(const char *render_node) {
 }
 
 int main(int argc, char **argv) {
-    const bool override_gralloc   = property_get_bool("ro.gralloc.override", true),
-               use_minigbm_amdgpu = property_get_bool("ro.gralloc.minigbm_amdgpu", false);
+    const bool override_gralloc    = property_get_bool("ro.gralloc.override", true),
+               use_minigbm_amdgpu  = property_get_bool("ro.gralloc.minigbm_amdgpu", false),
+               run_without_wayland = property_get_bool("ro.waydroid.run_without_wayland", false);
 
     char gralloc_cmdline[100],
          gralloc_impl[PROPERTY_VALUE_MAX],
@@ -411,6 +413,20 @@ int main(int argc, char **argv) {
         property_set("debug.ffmpeg-codec2.pixel_format", "RGBX_8888");
     } else {
         property_set("debug.ffmpeg-codec2.pixel_format", "RGBX_8888");
+    }
+
+    if (run_without_wayland) {
+        system("stop vendor.hwcomposer-2-1");
+
+        if (strcmp(gralloc_impl, "minigbm_celadon") == 0) {
+            mount("/vendor/etc/vintf/manifest.disabled/hwcomposer3.xml", "/vendor/etc/vintf/manifest/hwcomposer.xml", NULL, MS_BIND, NULL);
+            property_set("ro.hardware.hwcomposer", "drm_celadon");
+        } else {
+            property_set("ro.hardware.hwcomposer", "drm_minigbm");
+            system("start vendor.hwcomposer-2-4");
+        }
+    } else {
+        property_set("ro.hardware.hwcomposer", "waydroid");
     }
 
     if (access(DMABUF_SYSTEM_HEAP, F_OK) != 0) {
