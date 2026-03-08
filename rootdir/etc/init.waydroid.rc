@@ -5,6 +5,8 @@ on boot
 
 on property:sys.boot_completed=1
     start adbd
+    exec -- /system/bin/sh -c "settings put system min_refresh_rate `dumpsys display | grep -m1 -o 'vsync=[0-9]*' | cut -d= -f2 | head -n1`"
+    exec -- /system/bin/sh -c "settings put system peak_refresh_rate `dumpsys display | grep -m1 -o 'vsync=[0-9]*' | cut -d= -f2 | head -n1`"
 
 on early-init
     exec -- /vendor/bin/waydroid-init
