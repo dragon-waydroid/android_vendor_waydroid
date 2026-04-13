@@ -1,0 +1,58 @@
+From a04887790951cb1658692980ff17a51d74686f46 Mon Sep 17 00:00:00 2001
+From: cool <bilibili@att.net>
+Date: Sun, 12 Apr 2026 22:06:20 +0800
+Subject: [PATCH] libmeminfo: skip GPU BPF map access in container environments
+
+In container environments like Waydroid, the GPU memory BPF map
+(/sys/fs/bpf/map_gpuMem_gpu_mem_total_map) may not exist or may have
+incompatible key/value sizes compared to what Android expects.
+
+BpfMapRO constructor calls abortOnMismatch() which triggers abort()
+on key/value size mismatch, killing the system_server process and
+causing a soft reboot of the Android framework.
+
+Add access() checks before BpfMapRO construction in both
+ReadPerProcessGpuMem() and ReadProcessGpuUsageKb() to gracefully
+return false instead of aborting.
+
+Change-Id: Ic45e90affef72f1537c59a4f5c438d9c087fd72f
+---
+ sysmeminfo.cpp | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/sysmeminfo.cpp b/sysmeminfo.cpp
+index 767335f..b478c85 100644
+--- a/sysmeminfo.cpp
++++ b/sysmeminfo.cpp
+@@ -384,6 +384,13 @@ bool ReadPerProcessGpuMem([[maybe_unused]] std::unordered_map<uint32_t, uint64_t
+ #if defined(__ANDROID__) && !defined(__ANDROID_APEX__) && !defined(__ANDROID_VNDK__)
+     static constexpr const char kBpfGpuMemTotalMap[] = "/sys/fs/bpf/map_gpuMem_gpu_mem_total_map";
+ 
++    // Check if the BPF map file exists before opening to avoid aborting
++    // in container environments (e.g., Waydroid) where the map may not
++    // exist or may have incompatible key/value sizes.
++    if (access(kBpfGpuMemTotalMap, R_OK) != 0) {
++        return false;
++    }
++
+     // Use the read-only wrapper BpfMapRO to properly retrieve the read-only map.
+     auto map = bpf::BpfMapRO<uint64_t, uint64_t>(kBpfGpuMemTotalMap);
+     if (!map.isValid()) {
+@@ -433,6 +440,14 @@ bool ReadProcessGpuUsageKb([[maybe_unused]] uint32_t pid, [[maybe_unused]] uint3
+ #if defined(__ANDROID__) && !defined(__ANDROID_APEX__) && !defined(__ANDROID_VNDK__)
+     static constexpr const char kBpfGpuMemTotalMap[] = "/sys/fs/bpf/map_gpuMem_gpu_mem_total_map";
+ 
++    // Check if the BPF map file exists before opening to avoid aborting
++    // in container environments (e.g., Waydroid) where the map may not
++    // exist or may have incompatible key/value sizes.
++    if (access(kBpfGpuMemTotalMap, R_OK) != 0) {
++        if (size) *size = 0;
++        return false;
++    }
++
+     uint64_t gpu_mem;
+ 
+     // BPF Key [32-bits GPU ID | 32-bits PID]
+-- 
+2.43.0
+

@@ -1,0 +1,33 @@
+From 5beefc9a6a1923ec46a7e4319cb1f22156b53379 Mon Sep 17 00:00:00 2001
+From: Konsta <konsta09@gmail.com>
+Date: Wed, 12 Nov 2025 18:32:51 +0200
+Subject: [PATCH] android: make libudev-zero available for Raspberry Vanilla
+
+* Make available as shared library, vendor available, and visible to
+  ffmpeg and v4l-utils.
+---
+ Android.bp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Android.bp b/Android.bp
+index 47576a0..1b8c9c6 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -20,10 +20,13 @@ cc_genrule {
+     cmd: "cp $(in) $(out)",
+ }
+ 
+-cc_library_static {
++cc_library {
+     name: "libudev-zero",
++    vendor_available: true,
+     visibility: [
++        "//external/ffmpeg/libavcodec",
+         "//external/igt-gpu-tools",
++        "//external/v4l-utils/utils/media-ctl",
+         "//vendor:__subpackages__",
+     ],
+     srcs: [
+-- 
+2.43.0
+

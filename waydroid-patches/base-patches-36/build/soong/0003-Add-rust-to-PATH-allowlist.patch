@@ -1,0 +1,27 @@
+From bd7a1c5dfa63b7f590e30042d0815f23f7fd2258 Mon Sep 17 00:00:00 2001
+From: SupeChicken666 <me@supechicken666.dev>
+Date: Tue, 31 Mar 2026 00:45:48 +0000
+Subject: [PATCH 3/4] Add rust to PATH allowlist
+
+Change-Id: I49d2ad5e1aca04650432ef6f99f147e41c4bdf20
+Signed-off-by: SupeChicken666 <me@supechicken666.dev>
+---
+ ui/build/paths/config.go | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ui/build/paths/config.go b/ui/build/paths/config.go
+index 4af7d70..5388268 100644
+--- a/ui/build/paths/config.go
++++ b/ui/build/paths/config.go
+@@ -104,6 +104,8 @@ var Configuration = map[string]PathConfig{
+ 	"perl":        Log,
+ 	"pstree":      Allowed,
+ 	"rsync":       Allowed,
++	"rustc":       Allowed,
++	"rustfmt":     Allowed,
+ 	"sh":          Allowed,
+ 	"stubby":      Allowed,
+ 	"tr":          Allowed,
+-- 
+2.53.0
+
